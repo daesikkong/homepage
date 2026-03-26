@@ -30,3 +30,14 @@ jobs:
           publish_branch: gh-pages
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Verify deployment
+        run: |
+          echo "배포 확인 중..."
+          sleep 10
+          if curl -s -o /dev/null -w "%{http_code}" https://daesikkong.github.io/homepage/ | grep -q "200"; then
+            echo "✅ 배포 성공! URL: https://daesikkong.github.io/homepage/"
+          else
+            echo "❌ 배포 실패 또는 아직 반영되지 않음"
+            exit 1
+          fi
